@@ -1,27 +1,26 @@
-name: Auto Unzip
+name: Unzip WindUI-1.5.4.zip
 
 on:
   push:
-    paths:
-      - '*.zip'
+    branches:
+      - main
 
 jobs:
   unzip:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout Repo
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Unzip file in root
-      run: |
-        unzip *.zip
-        rm *.zip
-
-    - name: Commit unzipped files
-      run: |
-        git config user.name "github-actions"
-        git config user.email "github-actions@github.com"
-        git add .
-        git commit -m "Unzipped zip file and removed it"
-        git push
+      - name: Unzip WindUI-1.5.4.zip
+        run: |
+          mkdir -p WindUI
+          unzip -o WindUI-1.5.4.zip -d WindUI
+          
+      - name: Commit extracted files
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add WindUI
+          git commit -m "Unzip WindUI-1.5.4.zip contents"
+          git push
