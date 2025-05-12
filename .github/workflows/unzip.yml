@@ -3,7 +3,7 @@ name: Auto Unzip
 on:
   push:
     paths:
-      - '**.zip'
+      - '*.zip'
 
 jobs:
   unzip:
@@ -13,17 +13,15 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v3
 
-    - name: Find ZIP file and Unzip
+    - name: Unzip file in root
       run: |
-        ZIPFILE=$(find . -name '*.zip' | head -n 1)
-        echo "Found ZIP: $ZIPFILE"
-        unzip "$ZIPFILE" -d ./unzipped
-        rm "$ZIPFILE"
+        unzip *.zip
+        rm *.zip
 
-    - name: Commit unzipped content
+    - name: Commit unzipped files
       run: |
         git config user.name "github-actions"
         git config user.email "github-actions@github.com"
-        git add unzipped
-        git commit -m "Auto-unzipped uploaded ZIP file"
+        git add .
+        git commit -m "Unzipped zip file and removed it"
         git push
