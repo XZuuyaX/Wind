@@ -1,4 +1,4 @@
-name: Unzip WindUI-1.5.4.tar.gz
+name: Unpack WindUI-1.5.4.tar.gz
 
 on:
   push:
@@ -6,22 +6,21 @@ on:
       - main
 
 jobs:
-  unzip:
+  unpack:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Unzip WindUI-1.5.4.tar.gz
-
+      - name: Extract WindUI-1.5.4.tar.gz
         run: |
           mkdir -p WindUI
-          unzip -o WindUI-1.5.4.tar.gz -d WindUI
-          
+          tar -xzf WindUI-1.5.4.tar.gz -C WindUI
+
       - name: Commit extracted files
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add WindUI
-          git commit -m "Unzip WindUI-1.5.4.tar.gz contents"
+          git commit -m "Unpack WindUI-1.5.4.tar.gz contents"
           git push
